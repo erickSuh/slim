@@ -1,26 +1,29 @@
 <?php
     require 'vendor/autoload.php';
     $app = new \Slim\App();
-    $app->get('/calculadora/{valor1}{operador}{valor2}', function($request, $response, $args)
+    $app->get('/calculadora/{v1}/{op}/{v2}', function($request, $response, $args)
     {
-        switch($args['operador'])
+        $resp = 0;
+        switch($args['op'])
         {
-            case "*":
-            $response -> $args['valor1'] * $args['valor2'];
+            case "0":
+            $resp = $args['v1'] + $args['v2'];
             break;
 
-            case "+":
-            $response -> $args['valor1'] + $args['valor2'];
+            case "1":
+            $resp = $args['v1'] - $args['v2'];
             break;
 
-            case "/":
-            $response -> $args['valor1'] / $args['valor2'];
+            case "2":
+            $resp = $args['v1'] * $args['v2'];
             break;
 
-            case "-":
-            $response -> $args['valor1'] - $args['valor2'];
+            case "3":
+            $resp = $args['v1'] / $args['v2'];
             break;
         }
+        $response = $response->withJson($resp);
         return $response;
     });
     $app->run();
+?>
