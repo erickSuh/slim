@@ -1,8 +1,11 @@
 <?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
     require 'vendor/autoload.php';
     $app = new \Slim\App();
-    $app->get('/calculadora/{valor1}{operador}{valor2}', function($request, $response, $args)
+    $app->get('/', function($request, $response, $args)
     {
+        
         switch($args['operador'])
         {
             case "*":
@@ -21,6 +24,8 @@
             $response -> $args['valor1'] - $args['valor2'];
             break;
         }
-        return $response;
+        $response->getBody()->write("Hello, $response");
+        echo((string)$response);
+        echo("texto");
     });
     $app->run();
